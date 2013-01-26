@@ -176,6 +176,8 @@
            </item>
           </layout>
          </widget>
+         <zorder>horizontalLayoutWidget_2</zorder>
+         <zorder>groupBox</zorder>
         </widget>
        </item>
        <item>
@@ -205,9 +207,9 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>20</y>
-          <width>121</width>
-          <height>23</height>
+          <y>30</y>
+          <width>281</width>
+          <height>51</height>
          </rect>
         </property>
         <property name="text">
@@ -218,13 +220,93 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>50</y>
-          <width>121</width>
-          <height>23</height>
+          <y>80</y>
+          <width>281</width>
+          <height>51</height>
          </rect>
         </property>
         <property name="text">
          <string>Load Right Eye Image</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="comboBox">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>170</y>
+          <width>281</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="currentText">
+         <string>red / cyan</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>red / cyan</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>red / blue</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>red / green</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLabel" name="label_4">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>150</y>
+          <width>101</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Glasses type:</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButton">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>230</y>
+          <width>261</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Crop Final Anaglyph</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButton_2">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>260</y>
+          <width>261</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Add background</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>251</y>
+          <width>114</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Choose Color</string>
         </property>
        </widget>
       </widget>
@@ -238,7 +320,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
