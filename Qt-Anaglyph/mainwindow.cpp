@@ -6,37 +6,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    _backgroundColor = Qt::white;
+    isDataLoaded = false;
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-    _leftEyeImage = QFileDialog::getOpenFileName(this, tr("Open Left Eye Image"), "", tr("Image Files (*.png *.jpeg *.bmp *.jpg)"));
-    _a.addLeftEyeImage(_leftEyeImage);
-    QImage imgCpy = _a.getLeftEyeImage();
-    float wProp = 1.0f;
-    if(imgCpy.width() > ui->imageEyeLeft->width())
-        wProp = imgCpy.width() / ui->imageEyeLeft->width();
-    else if(imgCpy.width() < ui->imageEyeLeft->width())
-        wProp = ui->imageEyeLeft->width() / imgCpy.width();
-    ui->imageEyeLeft->setPixmap(QPixmap::fromImage(imgCpy.scaled(QSize(ui->imageEyeLeft->width()/wProp, ui->imageEyeLeft->height()))));
-}
-
-void MainWindow::on_pushButton_2_clicked()
-{
-    _rightEyeImage = QFileDialog::getOpenFileName(this, tr("Open Right Eye Image"), "", tr("Image Files (*.png *.jpeg *.bmp *.jpg)"));
-    _a.addRightEyeImage(_rightEyeImage);
-    QImage imgCpy = _a.getRigthEyeImage();
-    float wProp = 1.0f;
-    if(imgCpy.width() > ui->imageEyeRight->width())
-        wProp = imgCpy.width() / ui->imageEyeRight->width();
-    else if(imgCpy.width() < ui->imageEyeRight->width())
-        wProp = ui->imageEyeRight->width() / imgCpy.width();
-    ui->imageEyeRight->setPixmap(QPixmap::fromImage(imgCpy.scaled(QSize(ui->imageEyeRight->width()/wProp, ui->imageEyeRight->height()))));
 }
 
 void MainWindow::on_buttonColor_clicked()
@@ -47,19 +23,27 @@ void MainWindow::on_buttonColor_clicked()
     ui->labelColor->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_backgroundColor.red()).arg(_backgroundColor.green()).arg(_backgroundColor.blue()));
 }
 
-void MainWindow::on_buttonGenerate_clicked()
+void MainWindow::on_buttonLoad_clicked()
 {
-    _a.generate(ui->comboBoxGlasses->currentIndex(), (ui->radioButtonCrop->isChecked() ? kAnaglyphOptionCrop : kAnaglyphOptionBackground), _backgroundColor);
+
+    QString dataFilename = QFileDialog::getOpenFileName(this, tr("Open Shape Data"), "", tr("Data Files (*.dat *.txt)"));
+    QString data = "test";
+    _a.setData(data);
+    isDataLoaded = true;
+    this->updateAnaglyph();
+
 }
 
-void MainWindow::on_radioButtonBackground_clicked()
+void MainWindow::on_buttonSave_clicked()
 {
-    ui->buttonColor->setEnabled(true);
-    ui->labelColor->setHidden(false);
+
 }
 
-void MainWindow::on_radioButtonCrop_clicked()
-{
-    ui->buttonColor->setEnabled(false);
-    ui->labelColor->setHidden(true);
+void MainWindow::updateAnaglyph() {
+    if (isDataLoaded) {
+        _a.setBackgroundColor(_backgroundColor);
+        _a.setGlassesType(ui->comboBoxGlasses->currentIndex());
+        _a.setAxis(ui->sliderX->value(), ui->sliderY->value(), ui->sliderZ->value());
+        _a.generate();
+    }
 }

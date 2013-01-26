@@ -20,24 +20,21 @@ public:
     ~MainWindow();
     
 private slots:
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
 
     void on_buttonColor_clicked();
 
-    void on_buttonGenerate_clicked();
+    void on_buttonLoad_clicked();
 
-    void on_radioButtonBackground_clicked();
-
-    void on_radioButtonCrop_clicked();
+    void on_buttonSave_clicked();
 
 private:
+    void updateAnaglyph();
+
     Ui::MainWindow *ui;
-    QString _leftEyeImage;
-    QString _rightEyeImage;
     Anaglyph _a;
+
     QColor _backgroundColor;
+    bool isDataLoaded;
 };
 
 #endif // MAINWINDOW_H

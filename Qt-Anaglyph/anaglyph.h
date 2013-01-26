@@ -8,22 +8,27 @@
 #define kAnaglyphGlassesRedBlue     1
 #define kAnaglyphGlassesRedGreen    2
 
-#define kAnaglyphOptionCrop         0
-#define kAnaglyphOptionBackground   1
-
 class Anaglyph
 {
 public:
     Anaglyph();
-    bool addLeftEyeImage(const QString& fileName, const char* format=0) {return _leftEyeImage.load(fileName, format);}
-    bool addRightEyeImage(const QString& fileName, const char* format=0) {return _rightEyeImage.load(fileName, format);}
-    QImage getRigthEyeImage() const {return _rightEyeImage;}
-    QImage getLeftEyeImage() const {return _leftEyeImage;}
+    void setData(QString data);
+    QImage getGeneratedAnaglyph() const { return _anaglyphImage; }
+    void setGlassesType(int glassesType) { _glassesType = glassesType; }
+    void setBackgroundColor(QColor backgroundColor) { _backgroundColor = backgroundColor; }
+    void setAxis(int X, int Y, int Z) { _X = X; _Y = Y; _Z = Z; }
 
-    void generate(int glassesType, int option, QColor backgroundColor);
+    void generate();
 private:
-    QImage _rightEyeImage;
-    QImage _leftEyeImage;
+    int _X;
+    int _Y;
+    int _Z;
+
+    int _glassesType;
+    QColor _backgroundColor;
+
+    QImage _anaglyphImage;
+
 };
 
 #endif // ANAGLYPH_H

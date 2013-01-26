@@ -3,8 +3,20 @@
 
 Anaglyph::Anaglyph()
 {
+    _X = 0;
+    _Y = 0;
+    _Z = 0;
+    _backgroundColor = Qt::white;
 }
 
-void Anaglyph::generate(int glassesType, int option, QColor backgroundColor) {
-    qDebug() << "Generating...";
+void Anaglyph::setData(QString data) {
+
 }
+
+void Anaglyph::generate() {
+    qDebug() << "Generating...";
+
+
+}
+
+
