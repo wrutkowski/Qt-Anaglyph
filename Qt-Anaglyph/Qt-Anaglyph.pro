@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    anaglyph.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    anaglyph.h
 
 FORMS    += mainwindow.ui
