@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QFileDialog>
+#include <QColorDialog>
 #include <QDebug>
 #include "anaglyph.h"
 
@@ -23,11 +24,20 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_buttonColor_clicked();
+
+    void on_buttonGenerate_clicked();
+
+    void on_radioButtonBackground_clicked();
+
+    void on_radioButtonCrop_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString _leftEyeImage;
     QString _rightEyeImage;
     Anaglyph _a;
+    QColor _backgroundColor;
 };
 
 #endif // MAINWINDOW_H

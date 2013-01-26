@@ -106,7 +106,7 @@
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
              </property>
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="imageEyeLeft">
               <property name="geometry">
                <rect>
                 <x>10</x>
@@ -147,7 +147,7 @@
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
              </property>
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="imageEyeRight">
               <property name="geometry">
                <rect>
                 <x>10</x>
@@ -176,15 +176,26 @@
            </item>
           </layout>
          </widget>
-         <zorder>horizontalLayoutWidget_2</zorder>
-         <zorder>groupBox</zorder>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>AnaglyphImage</string>
+        <widget class="QGroupBox" name="groupBox_4">
+         <property name="title">
+          <string>Anaglyph Picture</string>
          </property>
+         <widget class="QLabel" name="imageAnaglyph">
+          <property name="geometry">
+           <rect>
+            <x>12</x>
+            <y>30</y>
+            <width>841</width>
+            <height>431</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -229,7 +240,7 @@
          <string>Load Right Eye Image</string>
         </property>
        </widget>
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="comboBoxGlasses">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -270,7 +281,7 @@
          <string>Glasses type:</string>
         </property>
        </widget>
-       <widget class="QRadioButton" name="radioButton">
+       <widget class="QRadioButton" name="radioButtonCrop">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -282,13 +293,16 @@
         <property name="text">
          <string>Crop Final Anaglyph</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
-       <widget class="QRadioButton" name="radioButton_2">
+       <widget class="QRadioButton" name="radioButtonBackground">
         <property name="geometry">
          <rect>
           <x>20</x>
           <y>260</y>
-          <width>261</width>
+          <width>131</width>
           <height>20</height>
          </rect>
         </property>
@@ -296,17 +310,110 @@
          <string>Add background</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="buttonColor">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
-          <x>160</x>
-          <y>251</y>
+          <x>150</x>
+          <y>250</y>
           <width>114</width>
           <height>41</height>
          </rect>
         </property>
         <property name="text">
          <string>Choose Color</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="buttonGenerate">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>300</y>
+          <width>281</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Generate Anaglyph</string>
+        </property>
+       </widget>
+       <widget class="QSlider" name="horizontalSlider">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>400</y>
+          <width>261</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>-100</number>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>380</y>
+          <width>101</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Offset X:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_6">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>440</y>
+          <width>101</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Offset Y:</string>
+        </property>
+       </widget>
+       <widget class="QSlider" name="verticalSlider">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>460</y>
+          <width>261</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>-100</number>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelColor">
+        <property name="geometry">
+         <rect>
+          <x>270</x>
+          <y>258</y>
+          <width>21</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </widget>
