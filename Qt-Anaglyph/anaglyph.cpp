@@ -15,6 +15,7 @@ Anaglyph::Anaglyph()
     _Y = 0;
     _Z = 0;
     _backgroundColor = Qt::white;
+    _lineWidth = 1.0;
 }
 
 void Anaglyph::setData(QStringList data) {
@@ -113,6 +114,11 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
     QVectorA w1;    //begin
     QVectorA w2;    //end
 
+    QPen pen1 = QPen(QColor(_colorLeftEye));
+    QPen pen2 = QPen(QColor(_colorRightEye));
+    pen1.setWidthF(_lineWidth);
+    pen2.setWidthF(_lineWidth);
+
     for(int i = 0; i < size; ++i)
     {
 
@@ -127,11 +133,11 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
         Point2D rightBegP = rightEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
         Point2D rightEndP = rightEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
 
-        p.setPen(QPen(QColor(_colorLeftEye)));
+        p.setPen(pen1);
         p.setBrush(QBrush(QColor(_colorLeftEye), Qt::NoBrush));
         p.drawLine(QLine(leftBegP.x, leftBegP.y, leftEndP.x, leftEndP.y));
 
-        p.setPen(QPen(QColor(_colorRightEye)));
+        p.setPen(pen2);
         p.setBrush(QBrush(QColor(_colorRightEye), Qt::NoBrush));
         p.drawLine(QLine(rightBegP.x, rightBegP.y, rightEndP.x, rightEndP.y));
 

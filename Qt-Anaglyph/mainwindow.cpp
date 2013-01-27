@@ -87,6 +87,7 @@ void MainWindow::updateAnaglyph() {
         _a.setLeftEyeColor(_colorLeftEye);
         _a.setRightEyeColor(_colorRightEye);
         _a.generate(ui);
+        _a.setLineWidth(_lineWidth);
 
         ui->imageAnaglyph->setPixmap(QPixmap::fromImage(_a.getGeneratedAnaglyph()));
         ui->imageAnaglyph->show();
@@ -175,6 +176,6 @@ void MainWindow::on_horizontalSlider_2_valueChanged(int value)
 void MainWindow::on_horizontalSlider_3_valueChanged(int value)
 {
     ui->labelLine->setText(QString::number(value));
-    _a.setLineWidth((double)value/10.0);
+    _lineWidth = (double)value/10.0;
     this->updateAnaglyph();
 }
