@@ -13,9 +13,11 @@ class Anaglyph
 public:
     Anaglyph();
     void setData(QStringList data);
+    QList<ALine> getData() const { return _data; }
     QImage getGeneratedAnaglyph() const { return _anaglyphImage; }
     void setGlassesColors(QColor colorLeftEye, QColor colorRightEye) { _colorLeftEye = colorLeftEye; _colorRightEye = colorRightEye; }
     void setBackgroundColor(QColor backgroundColor) { _backgroundColor = backgroundColor; }
+    QColor getBackgroundColor() const { return _backgroundColor; }
     void setAxis(int X, int Y, int Z) { _X = X; _Y = Y; _Z = Z; }
     void setCoordDist(double dist) {_coordinateDistance = dist;}
     void setObservDist(double dist) {_coordinateDistance = dist;}
