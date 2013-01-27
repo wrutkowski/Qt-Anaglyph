@@ -54,6 +54,7 @@ private:
     QColor _backgroundColor;
     QColor _colorLeftEye;
     QColor _colorRightEye;
+    double _lineWidth;
     bool isDataLoaded;
 };
 

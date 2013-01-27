@@ -86,6 +86,7 @@ void MainWindow::updateAnaglyph() {
         _a.setAxis(ui->sliderX->value(), ui->sliderY->value(), ui->sliderZ->value());
         ui->imageAnaglyph->resize(800,430);
         _a.generate(ui);
+        _a.setLineWidth(_lineWidth);
 
        // _a.getGeneratedAnaglyph();
         ui->imageAnaglyph->setPixmap(QPixmap::fromImage(_a.getGeneratedAnaglyph()));
@@ -176,6 +177,6 @@ void MainWindow::on_horizontalSlider_2_valueChanged(int value)
 void MainWindow::on_horizontalSlider_3_valueChanged(int value)
 {
     ui->labelLine->setText(QString::number(value));
-    _a.setLineWidth((double)value/10.0);
+    _lineWidth = (double)value/10.0;
     this->updateAnaglyph();
 }
