@@ -34,6 +34,7 @@ void MainWindow::on_buttonLoad_clicked()
     if(!file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(0,"error",file.errorString());
     }
+    ui->textEdit->clear();
 
     QTextStream in(&file);
 

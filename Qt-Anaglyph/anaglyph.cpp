@@ -10,12 +10,9 @@ Anaglyph::Anaglyph()
 }
 
 void Anaglyph::setData(QStringList data) {
-
     _data.clear();
 
-
     for (int i = 0; i < data.size(); ++i) {
-
         QString line = data[i];
         if (line.length() == 0 || QString(line[0]) == "#") continue; // empty or comment
 
@@ -23,11 +20,15 @@ void Anaglyph::setData(QStringList data) {
         if (row.count() < 7) continue;
 
         int type = row[0].toInt();
+        if (type == 1) {
+            ALine aline(row[1].toInt(), row[2].toInt(), row[3].toInt(), row[4].toInt(), row[5].toInt(), row[6].toInt());
+            _data.append(aline);
+        }
 
-        ALine aline(row[1].toInt(), row[2].toInt(), row[3].toInt(), row[4].toInt(), row[5].toInt(), row[6].toInt());
+    }
 
-        _data.append(aline);
-
+    for (int i = 0; i < _data.size(); ++i) {
+        qDebug() << _data[i].print();
     }
 
 }
