@@ -43,7 +43,6 @@ void MainWindow::on_buttonLoad_clicked()
     if (!file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(0, "Error", file.errorString());
     }
-    ui->textEdit->clear();
 
     QTextStream in(&file);
 
@@ -52,7 +51,6 @@ void MainWindow::on_buttonLoad_clicked()
     while(!in.atEnd()) {
         QString line = in.readLine();
         adata.append(line);
-        ui->textEdit->append(line);
     }
 
     file.close();
@@ -84,7 +82,7 @@ void MainWindow::updateAnaglyph() {
         _a.setBackgroundColor(_backgroundColor);
         _a.setGlassesColors(_colorLeftEye, _colorRightEye);
         _a.setAxis(ui->sliderX->value(), ui->sliderY->value(), ui->sliderZ->value());
-        ui->imageAnaglyph->resize(800,430);
+        ui->imageAnaglyph->resize(800,600);
         _a.generate(ui);
         _a.setLineWidth(_lineWidth);
 
