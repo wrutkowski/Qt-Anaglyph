@@ -171,3 +171,10 @@ void MainWindow::on_horizontalSlider_2_valueChanged(int value)
     _a.setEyeDist(value);
     this->updateAnaglyph();
 }
+
+void MainWindow::on_horizontalSlider_3_valueChanged(int value)
+{
+    ui->labelLine->setText(QString::number(value));
+    _a.setLineWidth((double)value/10.0);
+    this->updateAnaglyph();
+}

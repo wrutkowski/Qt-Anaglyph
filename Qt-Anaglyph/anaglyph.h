@@ -28,6 +28,7 @@ public:
     void setCoordDist(double dist) {_coordinateDistance = dist;}
     void setObservDist(double dist) {_coordinateDistance = dist;}
     void setEyeDist(double dist) {_eyeDistance = dist;}
+    void setLineWidth(double width) {_lineWidth = width;}
     double getEyeDist() const {return _eyeDistance;}
     double getCoordDist() const {return _coordinateDistance;}
     double getObservDist() const {return _observerDistance;}
@@ -50,7 +51,7 @@ private:
     QColor _backgroundColor;
     QColor _colorLeftEye;
     QColor _colorRightEye;
-
+    double _lineWidth;
     QImage _anaglyphImage;
 
 };
