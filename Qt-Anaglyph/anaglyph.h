@@ -5,6 +5,10 @@
 #include <QColor>
 #include <QList>
 #include <vector>
+
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
 #include "aline.h"
 #include "point.h"
 
@@ -25,7 +29,7 @@ public:
     double getObservDist() const {return _observerDistance;}
     Point2D leftEyeView(double x, double y, double z);
     Point2D rightEyeView(double x, double y, double z);
-    void generate();
+    void generate(Ui::MainWindow *ui);
 private:
     double _coordinateDistance; // distance between (0,0,0) and the screen; slider will be good
     double _observerDistance; // distance between eyes and the screen
