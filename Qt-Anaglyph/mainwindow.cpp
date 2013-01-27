@@ -269,3 +269,10 @@ void MainWindow::on_sliderZ_valueChanged(int value)
     ui->labelZ->setText(QString("%1°").arg(value));
     this->updateAnaglyph();
 }
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    ui->labelZoom->setText(QString::number(value));
+    _a.setCoordDist(value);
+    this->updateAnaglyph();
+}
