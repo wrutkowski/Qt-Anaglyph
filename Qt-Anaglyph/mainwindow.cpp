@@ -70,7 +70,7 @@ void MainWindow::on_buttonSave_clicked()
 void MainWindow::updateAnaglyph() {
     if (isDataLoaded) {
         _a.setBackgroundColor(_backgroundColor);
-        _a.setGlassesType(ui->comboBoxGlasses->currentIndex());
+        _a.setGlassesColors(_colorLeftEye, _colorRightEye);
         _a.setAxis(ui->sliderX->value(), ui->sliderY->value(), ui->sliderZ->value());
         _a.generate();
     }
