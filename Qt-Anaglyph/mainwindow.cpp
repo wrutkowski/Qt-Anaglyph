@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QMessageBox>
+#include <QImageWriter>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -38,8 +39,8 @@ void MainWindow::on_buttonLoad_clicked()
     QString dataFilename = QFileDialog::getOpenFileName(this, tr("Open Shape Data"), "", tr("Data Files (*.dat *.txt)"));
 
     QFile file(dataFilename);
-    if(!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(0,"error",file.errorString());
+    if (!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(0, "Error", file.errorString());
     }
     ui->textEdit->clear();
 
@@ -64,7 +65,17 @@ void MainWindow::on_buttonLoad_clicked()
 
 void MainWindow::on_buttonSave_clicked()
 {
+    QImage anaglyphImg = _a.getGeneratedAnaglyph();
+    if (anaglyphImg.isNull()) {
+        QMessageBox::information(0, "Error", "Load valid data file first!");
+        return;
+    }
 
+    QString imageFilename = QFileDialog::getSaveFileName(this, tr("Save Anaglyph Image"), "", tr("Image File (*.png)"));
+    QImageWriter writer(imageFilename);
+    if (!writer.write(anaglyphImg)) {
+        QMessageBox::information(0, "Error", writer.errorString());
+    }
 }
 
 void MainWindow::updateAnaglyph() {
