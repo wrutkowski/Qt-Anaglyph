@@ -207,6 +207,11 @@
           <string>red / green</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>custom</string>
+         </property>
+        </item>
        </widget>
        <widget class="QLabel" name="label_4">
         <property name="geometry">
@@ -450,7 +455,7 @@
          <string/>
         </property>
        </widget>
-       <widget class="QPushButton" name="buttonColor_2">
+       <widget class="QPushButton" name="buttonColorLeftEye">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -482,7 +487,7 @@
          <string/>
         </property>
        </widget>
-       <widget class="QPushButton" name="buttonColor_3">
+       <widget class="QPushButton" name="buttonColorRightEye">
         <property name="enabled">
          <bool>false</bool>
         </property>

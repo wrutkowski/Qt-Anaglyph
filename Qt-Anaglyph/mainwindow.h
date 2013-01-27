@@ -27,6 +27,12 @@ private slots:
 
     void on_buttonSave_clicked();
 
+    void on_comboBoxGlasses_currentIndexChanged(int index);
+
+    void on_buttonColorLeftEye_clicked();
+
+    void on_buttonColorRightEye_clicked();
+
 private:
     void updateAnaglyph();
 
@@ -34,6 +40,8 @@ private:
     Anaglyph _a;
 
     QColor _backgroundColor;
+    QColor _colorLeftEye;
+    QColor _colorRightEye;
     bool isDataLoaded;
 };
 
