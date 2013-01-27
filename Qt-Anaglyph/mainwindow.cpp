@@ -2,13 +2,21 @@
 #include "ui_mainwindow.h"
 
 #include <QMessageBox>
+#include <QImageWriter>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     _backgroundColor = Qt::white;
+    _colorLeftEye = QColor(Qt::red);
+    _colorRightEye = QColor(Qt::cyan);
+    ui->labelColor->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_backgroundColor.red()).arg(_backgroundColor.green()).arg(_backgroundColor.blue()));
+    ui->labelColorEyeLeft->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_colorLeftEye.red()).arg(_colorLeftEye.green()).arg(_colorLeftEye.blue()));
+    ui->labelColorEyeRight->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_colorRightEye.red()).arg(_colorRightEye.green()).arg(_colorRightEye.blue()));
+
     isDataLoaded = false;
 }
 
@@ -31,8 +39,8 @@ void MainWindow::on_buttonLoad_clicked()
     QString dataFilename = QFileDialog::getOpenFileName(this, tr("Open Shape Data"), "", tr("Data Files (*.dat *.txt)"));
 
     QFile file(dataFilename);
-    if(!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(0,"error",file.errorString());
+    if (!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(0, "Error", file.errorString());
     }
     ui->textEdit->clear();
 
@@ -57,14 +65,67 @@ void MainWindow::on_buttonLoad_clicked()
 
 void MainWindow::on_buttonSave_clicked()
 {
+    QImage anaglyphImg = _a.getGeneratedAnaglyph();
+    if (anaglyphImg.isNull()) {
+        QMessageBox::information(0, "Error", "Load valid data file first!");
+        return;
+    }
 
+    QString imageFilename = QFileDialog::getSaveFileName(this, tr("Save Anaglyph Image"), "", tr("Image File (*.png)"));
+    QImageWriter writer(imageFilename);
+    if (!writer.write(anaglyphImg)) {
+        QMessageBox::information(0, "Error", writer.errorString());
+    }
 }
 
 void MainWindow::updateAnaglyph() {
     if (isDataLoaded) {
         _a.setBackgroundColor(_backgroundColor);
-        _a.setGlassesType(ui->comboBoxGlasses->currentIndex());
+        _a.setGlassesColors(_colorLeftEye, _colorRightEye);
         _a.setAxis(ui->sliderX->value(), ui->sliderY->value(), ui->sliderZ->value());
         _a.generate();
     }
+}
+
+void MainWindow::on_comboBoxGlasses_currentIndexChanged(int index)
+{
+    if (index == 3) { // custom
+        ui->buttonColorLeftEye->setEnabled(true);
+        ui->buttonColorRightEye->setEnabled(true);
+    } else {
+        ui->buttonColorLeftEye->setEnabled(false);
+        ui->buttonColorRightEye->setEnabled(false);
+    }
+
+    switch (index) {
+        case 0:
+            _colorLeftEye = QColor(Qt::red);
+            _colorRightEye = QColor(Qt::cyan);
+            break;
+        case 1:
+            _colorLeftEye = QColor(Qt::red);
+            _colorRightEye = QColor(Qt::blue);
+            break;
+        case 2:
+            _colorLeftEye = QColor(Qt::red);
+            _colorRightEye = QColor(Qt::green);
+            break;
+    }
+
+    ui->labelColorEyeLeft->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_colorLeftEye.red()).arg(_colorLeftEye.green()).arg(_colorLeftEye.blue()));
+    ui->labelColorEyeRight->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_colorRightEye.red()).arg(_colorRightEye.green()).arg(_colorRightEye.blue()));
+}
+
+void MainWindow::on_buttonColorLeftEye_clicked()
+{
+    _colorLeftEye = QColorDialog::getColor(_colorLeftEye, this, tr("Select Left Eye Glass Color"), 0);
+    ui->labelColorEyeLeft->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_colorLeftEye.red()).arg(_colorLeftEye.green()).arg(_colorLeftEye.blue()));
+    ui->labelColorEyeRight->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_colorRightEye.red()).arg(_colorRightEye.green()).arg(_colorRightEye.blue()));
+}
+
+void MainWindow::on_buttonColorRightEye_clicked()
+{
+    _colorRightEye = QColorDialog::getColor(_colorRightEye, this, tr("Select Right Eye Glass Color"), 0);
+    ui->labelColorEyeLeft->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_colorLeftEye.red()).arg(_colorLeftEye.green()).arg(_colorLeftEye.blue()));
+    ui->labelColorEyeRight->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_colorRightEye.red()).arg(_colorRightEye.green()).arg(_colorRightEye.blue()));
 }

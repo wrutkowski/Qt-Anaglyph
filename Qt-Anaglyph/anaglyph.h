@@ -9,17 +9,13 @@
 #include "ALine.h"
 #include "point.h"
 
-#define kAnaglyphGlassesRedCyan     0
-#define kAnaglyphGlassesRedBlue     1
-#define kAnaglyphGlassesRedGreen    2
-
 class Anaglyph
 {
 public:
     Anaglyph();
     void setData(QStringList data);
     QImage getGeneratedAnaglyph() const { return _anaglyphImage; }
-    void setGlassesType(int glassesType) { _glassesType = glassesType; }
+    void setGlassesColors(QColor colorLeftEye, QColor colorRightEye) { _colorLeftEye = colorLeftEye; _colorRightEye = colorRightEye; }
     void setBackgroundColor(QColor backgroundColor) { _backgroundColor = backgroundColor; }
     void setAxis(int X, int Y, int Z) { _X = X; _Y = Y; _Z = Z; }
     Point2D leftEyeView(Point3D point);
@@ -38,6 +34,8 @@ private:
 
     int _glassesType;
     QColor _backgroundColor;
+    QColor _colorLeftEye;
+    QColor _colorRightEye;
 
     QImage _anaglyphImage;
 
