@@ -38,5 +38,20 @@ void Anaglyph::generate() {
 
 
 }
+Point2D Anaglyph::leftEyeView(Point3D point)
+{
+    Point2D p;
+    p.x = point.x*_observerDistance/(_observerDistance+_coordinateDistance+point.z);
+    p.y = ((point.y*_observerDistance)/(_coordinateDistance+_observerDistance+point.z))-
+            ((2*_eyeDistance*(_coordinateDistance+point.z))/(_coordinateDistance+_observerDistance+point.z));
+    return p;
+}
 
-
+Point2D Anaglyph::rightEyeView(Point3D point)
+{
+    Point2D p;
+    p.x = point.x*_observerDistance/(_observerDistance+_coordinateDistance+point.z);
+    p.y = ((point.y*_observerDistance)/(_coordinateDistance+_observerDistance+point.z))+
+            ((2*_eyeDistance*(_coordinateDistance+point.z))/(_coordinateDistance+_observerDistance+point.z));
+    return p;
+}

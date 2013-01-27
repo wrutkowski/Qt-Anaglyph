@@ -4,8 +4,10 @@
 #include <QImage>
 #include <QColor>
 #include <QList>
+#include <vector>
 #include "AObject.h"
 #include "ALine.h"
+#include "point.h"
 
 #define kAnaglyphGlassesRedCyan     0
 #define kAnaglyphGlassesRedBlue     1
@@ -20,9 +22,14 @@ public:
     void setGlassesType(int glassesType) { _glassesType = glassesType; }
     void setBackgroundColor(QColor backgroundColor) { _backgroundColor = backgroundColor; }
     void setAxis(int X, int Y, int Z) { _X = X; _Y = Y; _Z = Z; }
-
+    Point2D leftEyeView(Point3D point);
+    Point2D rightEyeView(Point3D point);
     void generate();
 private:
+    double _coordinateDistance; //odleglosc srodka ukladu od ekranu
+    double _observerDistance; //odleglosc oczu od monitora
+    double _eyeDistance; //rozstaw oczu
+
     QList<ALine> _data;
 
     int _X;
