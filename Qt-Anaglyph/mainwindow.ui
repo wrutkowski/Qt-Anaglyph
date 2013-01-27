@@ -513,13 +513,13 @@
          </rect>
         </property>
         <property name="minimum">
-         <number>-10</number>
+         <number>-100</number>
         </property>
         <property name="maximum">
-         <number>10</number>
+         <number>100</number>
         </property>
         <property name="value">
-         <number>0</number>
+         <number>10</number>
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -553,7 +553,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>0</string>
+         <string>10</string>
         </property>
        </widget>
       </widget>

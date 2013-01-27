@@ -2,7 +2,7 @@
 #include <QDebug>
 
 Anaglyph::Anaglyph()
-    : _coordinateDistance(5), _observerDistance(80), _eyeDistance(40)
+    : _coordinateDistance(10), _observerDistance(80), _eyeDistance(40)
 {
     _X = 0;
     _Y = 0;
