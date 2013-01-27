@@ -77,7 +77,7 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
 
     //odleglosc od ramki
     int distFromEdge = _observerDistance;
-
+    qDebug() << xmin << " " << xmax << ":" << ymin << " " << ymax;
     //ze swiata do ekranu
     QMatrixA wts = QMatrixA::worldToScreen(xmin, xmax, ymin, ymax, distFromEdge, w-distFromEdge, h-distFromEdge, distFromEdge);//h 0
 
@@ -85,7 +85,7 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
     QMatrixA tr  = QMatrixA::translation( 1,1,1 );
 
     //odleglosc od rzutni
-    double d = 5.0;
+    double d = 20.0;
 
     //perspektywa
     QMatrixA pv  = QMatrixA::perspectiveView(d);
