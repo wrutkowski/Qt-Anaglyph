@@ -2,7 +2,7 @@
 #include <QDebug>
 
 Anaglyph::Anaglyph()
-    : _eyeDistance(8)
+    : _coordinateDistance(5), _observerDistance(80), _eyeDistance(40)
 {
     _X = 0;
     _Y = 0;
@@ -39,20 +39,20 @@ void Anaglyph::generate() {
 
 
 }
-Point2D Anaglyph::leftEyeView(Point3D point)
+Point2D Anaglyph::leftEyeView(double x, double y, double z)
 {
     Point2D p;
-    p.x = point.x*_observerDistance/(_observerDistance+_coordinateDistance+point.z);
-    p.y = ((point.y*_observerDistance)/(_coordinateDistance+_observerDistance+point.z))-
-            ((_eyeDistance*(_coordinateDistance+point.z))/(_coordinateDistance+_observerDistance+point.z));
+    p.y = y*_observerDistance/(_observerDistance+_coordinateDistance+z);
+    p.x = ((x*_observerDistance)/(_coordinateDistance+_observerDistance+z))-
+            ((_eyeDistance*(_coordinateDistance+z))/(_coordinateDistance+_observerDistance+z));
     return p;
 }
 
-Point2D Anaglyph::rightEyeView(Point3D point)
+Point2D Anaglyph::rightEyeView(double x, double y, double z)
 {
     Point2D p;
-    p.x = point.x*_observerDistance/(_observerDistance+_coordinateDistance+point.z);
-    p.y = ((point.y*_observerDistance)/(_coordinateDistance+_observerDistance+point.z))+
-            ((_eyeDistance*(_coordinateDistance+point.z))/(_coordinateDistance+_observerDistance+point.z));
+    p.y = y*_observerDistance/(_observerDistance+_coordinateDistance+z);
+    p.x = ((x*_observerDistance)/(_coordinateDistance+_observerDistance+z))+
+            ((_eyeDistance*(_coordinateDistance+z))/(_coordinateDistance+_observerDistance+z));
     return p;
 }

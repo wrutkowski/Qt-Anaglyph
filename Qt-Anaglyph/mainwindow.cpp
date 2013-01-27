@@ -174,8 +174,8 @@ void MainWindow::updateAnaglyph() {
             QPainter p;
             p.begin(&img);
 
-            QVectorA w1;
-            QVectorA w2;
+            QVectorA w1;    //begin
+            QVectorA w2;    //end
 
             for(int i = 0; i < size; ++i)
             {
@@ -189,10 +189,16 @@ void MainWindow::updateAnaglyph() {
                // w1.Print();
                 QMatrixA::line2d(m1, &w1, &w2);
                 QMatrixA::line2d(m2, &w1, &w2);
-
+                Point2D leftBegP = _a.leftEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+                Point2D leftEndP = _a.leftEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
+                Point2D rightBegP = _a.rightEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+                Point2D rightEndP = _a.rightEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
                 p.setPen(QPen(QColor(Qt::blue)));
                 p.setBrush(QBrush(QColor(Qt::blue), Qt::NoBrush));
-                p.drawLine(QLine(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY()));
+                p.drawLine(QLine(leftBegP.x, leftBegP.y, leftEndP.x, leftEndP.y));
+                p.setPen(QPen(QColor(Qt::red)));
+                p.setBrush(QBrush(QColor(Qt::red), Qt::NoBrush));
+                p.drawLine(QLine(rightBegP.x, rightBegP.y, rightEndP.x, rightEndP.y));
 
 
             }

@@ -23,8 +23,8 @@ public:
     void setObservDist(double dist) {_coordinateDistance = dist;}
     double getCoordDist() const {return _coordinateDistance;}
     double getObservDist() const {return _observerDistance;}
-    Point2D leftEyeView(Point3D point);
-    Point2D rightEyeView(Point3D point);
+    Point2D leftEyeView(double x, double y, double z);
+    Point2D rightEyeView(double x, double y, double z);
     void generate();
 private:
     double _coordinateDistance; // distance between (0,0,0) and the screen; slider will be good

@@ -7,10 +7,4 @@ struct Point2D
     double y;
 };
 
-struct Point3D
-    : public Point2D
-{
-    double z;
-};
-
 #endif // POINT_H
