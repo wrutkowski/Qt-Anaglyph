@@ -13,7 +13,7 @@ public:
     Anaglyph();
     void setData(QStringList data);
     QImage getGeneratedAnaglyph() const { return _anaglyphImage; }
-    void setGlassesType(QColor colorLeftEye, QColor colorRightEye) { _colorLeftEye = colorLeftEye; _colorRightEye = colorRightEye; }
+    void setGlassesColors(QColor colorLeftEye, QColor colorRightEye) { _colorLeftEye = colorLeftEye; _colorRightEye = colorRightEye; }
     void setBackgroundColor(QColor backgroundColor) { _backgroundColor = backgroundColor; }
     void setAxis(int X, int Y, int Z) { _X = X; _Y = Y; _Z = Z; }
 
