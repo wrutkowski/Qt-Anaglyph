@@ -151,6 +151,9 @@
          </widget>
          <zorder>imageAnaglyph</zorder>
          <zorder>groupBox</zorder>
+         <zorder>groupBox</zorder>
+         <zorder>groupBox</zorder>
+         <zorder>groupBox</zorder>
         </widget>
        </item>
       </layout>
@@ -251,7 +254,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>528</y>
+          <y>560</y>
           <width>261</width>
           <height>22</height>
          </rect>
@@ -270,7 +273,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>508</y>
+          <y>540</y>
           <width>101</width>
           <height>16</height>
          </rect>
@@ -283,7 +286,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>568</y>
+          <y>590</y>
           <width>101</width>
           <height>16</height>
          </rect>
@@ -299,7 +302,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>588</y>
+          <y>610</y>
           <width>261</width>
           <height>22</height>
          </rect>
@@ -331,7 +334,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>628</y>
+          <y>640</y>
           <width>101</width>
           <height>16</height>
          </rect>
@@ -347,7 +350,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>648</y>
+          <y>660</y>
           <width>261</width>
           <height>22</height>
          </rect>
@@ -366,7 +369,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>480</y>
+          <y>520</y>
           <width>62</width>
           <height>16</height>
          </rect>
@@ -384,7 +387,7 @@
         <property name="geometry">
          <rect>
           <x>140</x>
-          <y>568</y>
+          <y>590</y>
           <width>31</width>
           <height>16</height>
          </rect>
@@ -400,7 +403,7 @@
         <property name="geometry">
          <rect>
           <x>140</x>
-          <y>628</y>
+          <y>640</y>
           <width>31</width>
           <height>16</height>
          </rect>
@@ -416,7 +419,7 @@
         <property name="geometry">
          <rect>
           <x>140</x>
-          <y>508</y>
+          <y>540</y>
           <width>31</width>
           <height>16</height>
          </rect>
@@ -509,7 +512,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>390</y>
+          <y>430</y>
           <width>261</width>
           <height>22</height>
          </rect>
@@ -531,7 +534,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>360</y>
+          <y>410</y>
           <width>41</width>
           <height>16</height>
          </rect>
@@ -549,7 +552,7 @@
         <property name="geometry">
          <rect>
           <x>140</x>
-          <y>360</y>
+          <y>410</y>
           <width>21</width>
           <height>21</height>
          </rect>
@@ -562,7 +565,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>420</y>
+          <y>460</y>
           <width>101</width>
           <height>16</height>
          </rect>
@@ -580,7 +583,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>450</y>
+          <y>480</y>
           <width>261</width>
           <height>22</height>
          </rect>
@@ -602,13 +605,66 @@
         <property name="geometry">
          <rect>
           <x>140</x>
-          <y>420</y>
+          <y>460</y>
           <width>46</width>
           <height>13</height>
          </rect>
         </property>
         <property name="text">
          <string>10</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_8">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>360</y>
+          <width>81</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Line Width</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelLine">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>360</y>
+          <width>46</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>10</string>
+        </property>
+       </widget>
+       <widget class="QSlider" name="horizontalSlider_3">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>380</y>
+          <width>261</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>50</number>
+        </property>
+        <property name="value">
+         <number>10</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </widget>
