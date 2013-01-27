@@ -163,3 +163,10 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
     _a.setCoordDist(value);
     this->updateAnaglyph();
 }
+
+void MainWindow::on_horizontalSlider_2_valueChanged(int value)
+{
+    ui->labelEye->setText(QString::number(value));
+    _a.setEyeDist(value);
+    this->updateAnaglyph();
+}

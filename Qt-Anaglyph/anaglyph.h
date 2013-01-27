@@ -25,6 +25,8 @@ public:
     void setAxis(int X, int Y, int Z) { _X = X; _Y = Y; _Z = Z; }
     void setCoordDist(double dist) {_coordinateDistance = dist;}
     void setObservDist(double dist) {_coordinateDistance = dist;}
+    void setEyeDist(double dist) {_eyeDistance = dist;}
+    double getEyeDist() const {return _eyeDistance;}
     double getCoordDist() const {return _coordinateDistance;}
     double getObservDist() const {return _observerDistance;}
     Point2D leftEyeView(double x, double y, double z);
