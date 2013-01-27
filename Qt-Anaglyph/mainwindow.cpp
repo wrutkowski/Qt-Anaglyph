@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->labelColor->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_backgroundColor.red()).arg(_backgroundColor.green()).arg(_backgroundColor.blue()));
     ui->labelColorEyeLeft->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_colorLeftEye.red()).arg(_colorLeftEye.green()).arg(_colorLeftEye.blue()));
     ui->labelColorEyeRight->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_colorRightEye.red()).arg(_colorRightEye.green()).arg(_colorRightEye.blue()));
-
+    _lineWidth = 1.0;
     isDataLoaded = false;
 }
 
