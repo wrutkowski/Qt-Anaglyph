@@ -3,6 +3,9 @@
 
 #include <QImage>
 #include <QColor>
+#include <QList>
+#include "AObject.h"
+#include "ALine.h"
 
 #define kAnaglyphGlassesRedCyan     0
 #define kAnaglyphGlassesRedBlue     1
@@ -12,7 +15,7 @@ class Anaglyph
 {
 public:
     Anaglyph();
-    void setData(QString data);
+    void setData(QStringList data);
     QImage getGeneratedAnaglyph() const { return _anaglyphImage; }
     void setGlassesType(int glassesType) { _glassesType = glassesType; }
     void setBackgroundColor(QColor backgroundColor) { _backgroundColor = backgroundColor; }
@@ -20,6 +23,8 @@ public:
 
     void generate();
 private:
+    QList<ALine> _data;
+
     int _X;
     int _Y;
     int _Z;

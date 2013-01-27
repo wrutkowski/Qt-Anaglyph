@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QMessageBox>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -27,9 +29,27 @@ void MainWindow::on_buttonLoad_clicked()
 {
 
     QString dataFilename = QFileDialog::getOpenFileName(this, tr("Open Shape Data"), "", tr("Data Files (*.dat *.txt)"));
-    QString data = "test";
-    _a.setData(data);
+
+    QFile file(dataFilename);
+    if(!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(0,"error",file.errorString());
+    }
+
+    QTextStream in(&file);
+
+    QStringList adata;
+
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        adata.append(line);
+        ui->textEdit->append(line);
+    }
+
+    file.close();
+
+    _a.setData(adata);
     isDataLoaded = true;
+
     this->updateAnaglyph();
 
 }

@@ -14,9 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    anaglyph.cpp
+    anaglyph.cpp \
+    qvectora.cpp \
+    qmatrixa.cpp
 
 HEADERS  += mainwindow.h \
-    anaglyph.h
+    anaglyph.h \
+    qvectora.h \
+    qmatrixa.h \
+    ALine.h \
+    AObject.h
 
 FORMS    += mainwindow.ui
