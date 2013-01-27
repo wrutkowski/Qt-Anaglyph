@@ -84,11 +84,12 @@ void MainWindow::updateAnaglyph() {
         _a.setBackgroundColor(_backgroundColor);
         _a.setGlassesColors(_colorLeftEye, _colorRightEye);
         _a.setAxis(ui->sliderX->value(), ui->sliderY->value(), ui->sliderZ->value());
-        _a.setLeftEyeColor(_colorLeftEye);
-        _a.setRightEyeColor(_colorRightEye);
+        ui->imageAnaglyph->resize(800,430);
         _a.generate(ui);
 
+       // _a.getGeneratedAnaglyph();
         ui->imageAnaglyph->setPixmap(QPixmap::fromImage(_a.getGeneratedAnaglyph()));
+
         ui->imageAnaglyph->show();
 
     }

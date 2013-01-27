@@ -50,7 +50,7 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
     int ymax=-9999;
 
     int w = 800;
-    int h = 400;
+    int h = 600;
 
     int size = _data.size();
 
@@ -98,7 +98,7 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
                                      ui->sliderY->value(),
                                     -ui->sliderZ->value() ); //- zeby obracalo sie do dodatniego kata
 
-    //przesuniecie za rzutnie o pol maxymalnego zakresu
+    //przesuniecie za rzutnie
     QMatrixA tr_view  = QMatrixA::translation( 0, 0, ( -50 ) / 20.0 * 0.5);
 
     QMatrixA m1   = tr_view * tr * rot * sc;

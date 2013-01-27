@@ -22,8 +22,6 @@ public:
     void setGlassesColors(QColor colorLeftEye, QColor colorRightEye) { _colorLeftEye = colorLeftEye; _colorRightEye = colorRightEye; }
     void setBackgroundColor(QColor backgroundColor) { _backgroundColor = backgroundColor; }
     QColor getBackgroundColor() const { return _backgroundColor; }
-    void setRightEyeColor(QColor c) { _colorRightEye = c; }
-    void setLeftEyeColor(QColor c) { _colorLeftEye = c; }
     void setAxis(int X, int Y, int Z) { _X = X; _Y = Y; _Z = Z; }
     void setCoordDist(double dist) {_coordinateDistance = dist;}
     void setObservDist(double dist) {_coordinateDistance = dist;}
