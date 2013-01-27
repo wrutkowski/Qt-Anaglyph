@@ -127,12 +127,12 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
         Point2D rightBegP = rightEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
         Point2D rightEndP = rightEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
 
-        p.setPen(QPen(QColor(Qt::blue)));
-        p.setBrush(QBrush(QColor(Qt::blue), Qt::NoBrush));
-
+        p.setPen(QPen(QColor(_colorLeftEye)));
+        p.setBrush(QBrush(QColor(_colorLeftEye), Qt::NoBrush));
         p.drawLine(QLine(leftBegP.x, leftBegP.y, leftEndP.x, leftEndP.y));
-        p.setPen(QPen(QColor(Qt::red)));
-        p.setBrush(QBrush(QColor(Qt::red), Qt::NoBrush));
+
+        p.setPen(QPen(QColor(_colorRightEye)));
+        p.setBrush(QBrush(QColor(_colorRightEye), Qt::NoBrush));
         p.drawLine(QLine(rightBegP.x, rightBegP.y, rightEndP.x, rightEndP.y));
 
     }
