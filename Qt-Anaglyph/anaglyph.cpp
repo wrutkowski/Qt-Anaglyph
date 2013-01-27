@@ -91,8 +91,7 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
     QMatrixA pv  = QMatrixA::perspectiveView(d);
 
     //skalowanie
-    QMatrixA sc  = QMatrixA::scale(   ( 1.0 )/10 ,    ( 1.0 )/10 ,
-                                    ( 1.0 )/10  );
+    QMatrixA sc  = QMatrixA::scale( 1.0/10, 1.0/10, 1.0/10);
 
     // rotacja
     QMatrixA rot = QMatrixA::rotate(   ui->sliderX->value(),
@@ -100,7 +99,7 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
                                     -ui->sliderZ->value() ); //- zeby obracalo sie do dodatniego kata
 
     //przesuniecie za rzutnie
-    QMatrixA tr_view  = QMatrixA::translation( 0, 0, ( -50 ) / 20.0 * 0.5);
+    QMatrixA tr_view  = QMatrixA::translation( 0, 0, 0.5);
 
     QMatrixA m1   = tr_view * tr * rot * sc;
     QMatrixA m2    = wts * pv;
