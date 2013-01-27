@@ -22,8 +22,7 @@ HEADERS  += mainwindow.h \
     anaglyph.h \
     qvectora.h \
     qmatrixa.h \
-    ALine.h \
-    AObject.h \
+    aline.h \
     point.h
 
 FORMS    += mainwindow.ui

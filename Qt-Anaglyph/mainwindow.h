@@ -33,6 +33,12 @@ private slots:
 
     void on_buttonColorRightEye_clicked();
 
+    void on_sliderX_valueChanged(int value);
+
+    void on_sliderY_valueChanged(int value);
+
+    void on_sliderZ_valueChanged(int value);
+
 private:
     void updateAnaglyph();
 

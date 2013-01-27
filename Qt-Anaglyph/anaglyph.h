@@ -5,8 +5,7 @@
 #include <QColor>
 #include <QList>
 #include <vector>
-#include "AObject.h"
-#include "ALine.h"
+#include "aline.h"
 #include "point.h"
 
 class Anaglyph
@@ -26,11 +25,12 @@ public:
     Point2D rightEyeView(Point3D point);
     void generate();
 private:
-    double _coordinateDistance; //odleglosc srodka ukladu od ekranu (przydalby sie do tego suwak)
-    double _observerDistance; //odleglosc oczu od monitora
-    const double _eyeDistance; //rozstaw oczu, tu przydaloby sie przetestowac bo nie wiem jak to przeliczyc na jednoski ukladu
+    double _coordinateDistance; // distance between (0,0,0) and the screen; slider will be good
+    double _observerDistance; // distance between eyes and the screen
+    double _eyeDistance; // distance between eyes; test - find the correlacion between mm and units
 
-    QList<ALine> _data;
+
+    QList<ALine> _data; // list of all lines of the shape
 
     int _X;
     int _Y;

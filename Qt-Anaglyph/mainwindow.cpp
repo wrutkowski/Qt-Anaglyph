@@ -129,3 +129,18 @@ void MainWindow::on_buttonColorRightEye_clicked()
     ui->labelColorEyeLeft->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_colorLeftEye.red()).arg(_colorLeftEye.green()).arg(_colorLeftEye.blue()));
     ui->labelColorEyeRight->setStyleSheet(QString("QLabel { background-color: rgb(%1, %2, %3) }").arg(_colorRightEye.red()).arg(_colorRightEye.green()).arg(_colorRightEye.blue()));
 }
+
+void MainWindow::on_sliderX_valueChanged(int value)
+{
+    ui->labelX->setText(QString("%1°").arg(value));
+}
+
+void MainWindow::on_sliderY_valueChanged(int value)
+{
+    ui->labelY->setText(QString("%1°").arg(value));
+}
+
+void MainWindow::on_sliderZ_valueChanged(int value)
+{
+    ui->labelZ->setText(QString("%1°").arg(value));
+}
