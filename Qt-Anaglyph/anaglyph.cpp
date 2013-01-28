@@ -9,7 +9,7 @@
 #include <QPainter>
 
 Anaglyph::Anaglyph()
-    : _coordinateDistance(10), _observerDistance(80), _eyeDistance(40), _zoom(10), _lineWidth(1.0), _drawAnaglyph(true), _drawShape(true)
+    : _coordinateDistance(10), _observerDistance(80), _eyeDistance(10), _zoom(10), _lineWidth(1.0), _drawAnaglyph(true), _drawShape(true)
 {
     _X = 0;
     _Y = 0;
@@ -125,9 +125,11 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
 
     QPainter p;
     p.begin(&_anaglyphImage);
+
     //left eye
     QVectorA w1;    //begin
     QVectorA w2;    //end
+
     //right eye
     QVectorA v1;    //begin
     QVectorA v2;    //end
@@ -139,23 +141,14 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
 
     for(int i = 0; i < size; ++i)
     {
-
-        qDebug() << "_data[i].z" << -_data.at(i).z1;
-        qDebug() << "_data[i].z" << -_data.at(i).z2;
-        //w1.Set(_data.at(i).x1, _data.at(i).y1, -_data.at(i).z1);
-        //w2.Set(_data.at(i).x2, _data.at(i).y2, -_data.at(i).z2);
-        //v1.Set(_data.at(i).x1, _data.at(i).y1, -_data.at(i).z1);
-        //v2.Set(_data.at(i).x2, _data.at(i).y2, -_data.at(i).z2);
-
-            Point2D leftBegP = leftEyeView(_data.at(i).x1, _data.at(i).y1, _data.at(i).z1);
-            Point2D leftEndP = leftEyeView(_data.at(i).x2, _data.at(i).y2, _data.at(i).z2);
-            Point2D rightBegP = rightEyeView(_data.at(i).x1, _data.at(i).y1, _data.at(i).z1);
-            Point2D rightEndP = rightEyeView(_data.at(i).x2, _data.at(i).y2, _data.at(i).z2);
-
+        Point2D leftBegP = leftEyeView(_data.at(i).x1, _data.at(i).y1, _data.at(i).z1);
+        Point2D leftEndP = leftEyeView(_data.at(i).x2, _data.at(i).y2, _data.at(i).z2);
+        Point2D rightBegP = rightEyeView(_data.at(i).x1, _data.at(i).y1, _data.at(i).z1);
+        Point2D rightEndP = rightEyeView(_data.at(i).x2, _data.at(i).y2, _data.at(i).z2);
 
         w1.Set(leftBegP.x, leftBegP.y, -_data.at(i).z1);
         w2.Set(leftEndP.x, leftEndP.y, -_data.at(i).z2);
-        v1.Set(rightBegP.x, rightBegP.y, -_data.at(i).z1);
+        v1.Set(rightBegP.x, rightBegP.y,-_data.at(i).z1);
         v2.Set(rightEndP.x, rightEndP.y, -_data.at(i).z2);
 
         QMatrixA::line2d(m1, &w1, &w2);
@@ -188,8 +181,6 @@ Point2D Anaglyph::leftEyeView(double x, double y, double z)
     p.y = y*_observerDistance/(_observerDistance+_coordinateDistance+z);
     p.x = ((x*_observerDistance)/(_coordinateDistance+_observerDistance+z))-
             ((_eyeDistance*(_coordinateDistance+z))/(_coordinateDistance+_observerDistance+z));
-    qDebug() << "leftEyeView.args Z" << z << "Y" << y << "X" << x;
-    qDebug() << "leftEyeView.result p.x" << p.x << "p.y" << p.y;
     return p;
 }
 
@@ -199,7 +190,5 @@ Point2D Anaglyph::rightEyeView(double x, double y, double z)
     p.y = y*_observerDistance/(_observerDistance+_coordinateDistance+z);
     p.x = ((x*_observerDistance)/(_coordinateDistance+_observerDistance+z))+
             ((_eyeDistance*(_coordinateDistance+z))/(_coordinateDistance+_observerDistance+z));
-    qDebug() << "rightEyeView.args Z" << z << "Y" << y << "X" << x;
-    qDebug() << "rightEyeView.result p.x" << p.x << "p.y" << p.y;
     return p;
 }
