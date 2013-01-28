@@ -173,7 +173,8 @@ Point2D Anaglyph::leftEyeView(double x, double y, double z)
     p.y = y*_observerDistance/(_observerDistance+_coordinateDistance+z);
     p.x = ((x*_observerDistance)/(_coordinateDistance+_observerDistance+z))-
             ((_eyeDistance*(_coordinateDistance+z))/(_coordinateDistance+_observerDistance+z));
-    qDebug() << "Z" << z;
+    qDebug() << "Z" << z << "Y" << y << "X" << x;
+    qDebug() << "p.x" << p.x << "p.y" << p.y;
     return p;
 }
 
@@ -183,6 +184,7 @@ Point2D Anaglyph::rightEyeView(double x, double y, double z)
     p.y = y*_observerDistance/(_observerDistance+_coordinateDistance+z);
     p.x = ((x*_observerDistance)/(_coordinateDistance+_observerDistance+z))+
             ((_eyeDistance*(_coordinateDistance+z))/(_coordinateDistance+_observerDistance+z));
-    qDebug() << "Z" << z;
+    qDebug() << "Z" << z << "Y" << y << "X" << x;
+    qDebug() << "p.x" << p.x << "p.y" << p.y;
     return p;
 }
