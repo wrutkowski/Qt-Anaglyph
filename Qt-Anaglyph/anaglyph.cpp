@@ -40,7 +40,7 @@ void Anaglyph::setData(QStringList data) {
     }
 
     for (int i = 0; i < _data.size(); ++i) {
-       // qDebug() << _data[i].print();
+       qDebug() << _data[i].print();
     }
 
 }
@@ -76,11 +76,21 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
 
             if( y1 < ymin )    ymin = y1;
             if( y2 < ymin )    ymin = y2;
+
+            if(size == 1){
+                xmin = x1;
+                xmax = x2;
+                ymin = y1;
+                ymax = y2;
+
+            }
+
         }
 
+        qDebug() << xmin << " " << xmax <<":"<<ymin<<" "<<ymax;
     //odleglosc od ramki
     int distFromEdge = _observerDistance;
-    //qDebug() << xmin << " " << xmax << ":" << ymin << " " << ymax;
+
     //ze swiata do ekranu
     QMatrixA wts = QMatrixA::worldToScreen(xmin, xmax, ymin, ymax, distFromEdge, w-distFromEdge, h-distFromEdge, distFromEdge);//h 0
 
@@ -106,6 +116,8 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
 
     QMatrixA m1   = tr_view * tr * rot * sc;
     QMatrixA m2    = wts * pv;
+    wts.Print();
+
 
     _anaglyphImage = QImage(QSize(w,h), QImage::Format_ARGB32_Premultiplied);
     _anaglyphImage.fill(_backgroundColor);

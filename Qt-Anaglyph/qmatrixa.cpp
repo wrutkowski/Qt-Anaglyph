@@ -161,13 +161,18 @@ QMatrixA QMatrixA::rotate(double ox, double oy, double oz)
 
 QMatrixA QMatrixA::worldToScreen(double x_0, double x_1, double y_0, double y_1, double x_min, double x_max, double y_min, double y_max )
 {
-    double S_x = ( x_max - x_min ) / ( x_1 - x_0 );
-    double S_y = ( y_max - y_min ) / ( y_1 - y_0 );
+    int k, j;
+    //div by 0!
+    if(x_1 == x_0) k = 1; else k = (x_1 - x_0);
+    if(y_1 == y_0) k = 1; else k = (y_1 - y_0);
+
+    double S_x = ( x_max - x_min ) / k;
+    double S_y = ( y_max - y_min ) / k;
 
     QMatrixA t;
 
-    t.data[0][0]=S_x;                                           t.data[0][3]= x_min - S_x * x_0;
-                        t.data[1][1]=S_y;                       t.data[1][3]= y_min - S_y * y_0;
+    t.data[0][0]=double(S_x);                                           t.data[0][3]= double(x_min - S_x * x_0);
+                        t.data[1][1]=double(S_y);                       t.data[1][3]= double(y_min - S_y * y_0);
 
     return t;
 }
