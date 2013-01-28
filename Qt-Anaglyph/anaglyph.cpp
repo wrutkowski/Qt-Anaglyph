@@ -137,6 +137,8 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
     for(int i = 0; i < size; ++i)
     {
 
+        qDebug() << "_data[i].z" << -_data.at(i).z1;
+        qDebug() << "_data[i].z" << -_data.at(i).z2;
         w1.Set(_data.at(i).x1, _data.at(i).y1, -_data.at(i).z1);
         w2.Set(_data.at(i).x2, _data.at(i).y2, -_data.at(i).z2);
 
