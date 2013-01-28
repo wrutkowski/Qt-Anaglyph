@@ -129,6 +129,9 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
     QVectorA w1;    //begin
     QVectorA w2;    //end
 
+    QVectorA v1;    //begin
+    QVectorA v2;    //end
+
     QPen pen1 = QPen(QColor(_colorLeftEye));
     QPen pen2 = QPen(QColor(_colorRightEye));
     pen1.setWidthF(_lineWidth);
@@ -141,28 +144,38 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
         qDebug() << "_data[i].z" << -_data.at(i).z2;
         w1.Set(_data.at(i).x1, _data.at(i).y1, -_data.at(i).z1);
         w2.Set(_data.at(i).x2, _data.at(i).y2, -_data.at(i).z2);
+        v1.Set(_data.at(i).x1, _data.at(i).y1, -_data.at(i).z1);
+        v2.Set(_data.at(i).x2, _data.at(i).y2, -_data.at(i).z2);
+
+            Point2D leftBegP = leftEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+            Point2D leftEndP = leftEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
+            Point2D rightBegP = rightEyeView(v1.GetX(), v1.GetY(), v1.GetZ());
+            Point2D rightEndP = rightEyeView(v2.GetX(), v2.GetY(), v2.GetZ());
+
+
+        w1.Set(leftBegP.x, leftBegP.y, -_data.at(i).z1);
+        w2.Set(leftEndP.x, leftEndP.y, -_data.at(i).z2);
+        v1.Set(rightBegP.x, rightBegP.y, -_data.at(i).z1);
+        v2.Set(rightEndP.x, rightEndP.y, -_data.at(i).z2);
 
         QMatrixA::line2d(m1, &w1, &w2);
         QMatrixA::line2d(m2, &w1, &w2);
-
+        QMatrixA::line2d(m1, &v1, &v2);
+        QMatrixA::line2d(m2, &v1, &v2);
         if (_drawShape) {
             p.setPen(QPen(QColor(Qt::black)));
             p.drawLine(QLine(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY()));
         }
 
         if (_drawAnaglyph) {
-            Point2D leftBegP = leftEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
-            Point2D leftEndP = leftEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
-            Point2D rightBegP = rightEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
-            Point2D rightEndP = rightEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
 
             p.setPen(pen1);
             p.setBrush(QBrush(QColor(_colorLeftEye), Qt::NoBrush));
-            p.drawLine(QLine(leftBegP.x, leftBegP.y, leftEndP.x, leftEndP.y));
+            p.drawLine(QLine(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY()));
 
             p.setPen(pen2);
             p.setBrush(QBrush(QColor(_colorRightEye), Qt::NoBrush));
-            p.drawLine(QLine(rightBegP.x, rightBegP.y, rightEndP.x, rightEndP.y));
+            p.drawLine(QLine(v1.GetX(), v1.GetY(), v2.GetX(), v2.GetY()));
         }
     }
 
