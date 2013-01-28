@@ -26,10 +26,13 @@ void Anaglyph::setData(QStringList data) {
         if (line.length() == 0 || QString(line[0]) == "#") continue; // empty or comment
 
         QStringList row = line.split(" ");
-        if (row.count() < 7) continue;
+
+        //gdy pierwsza linia ma tylko ilosc krawedzi
+        if (row.count() < 7 && i != 0) continue;
 
         int type = row[0].toInt();
-        if (type == 1) {
+
+        if (type == 1 && i != 0) {
             ALine aline(row[1].toInt(), row[2].toInt(), row[3].toInt(), row[4].toInt(), row[5].toInt(), row[6].toInt());
             _data.append(aline);
         }
@@ -77,7 +80,7 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
 
     //odleglosc od ramki
     int distFromEdge = _observerDistance;
-    qDebug() << xmin << " " << xmax << ":" << ymin << " " << ymax;
+    //qDebug() << xmin << " " << xmax << ":" << ymin << " " << ymax;
     //ze swiata do ekranu
     QMatrixA wts = QMatrixA::worldToScreen(xmin, xmax, ymin, ymax, distFromEdge, w-distFromEdge, h-distFromEdge, distFromEdge);//h 0
 
