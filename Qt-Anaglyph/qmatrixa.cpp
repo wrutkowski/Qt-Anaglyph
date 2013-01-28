@@ -148,7 +148,7 @@ QMatrixA QMatrixA::rotate(double ox, double oy, double oz)
 
     ty.data[0][0]= cos(oy);                             ty.data[0][2]= sin(oy);
                             ty.data[1][1]=1.0;
-    ty.data[2][0]=-sin(oy); ty.data[2][1]=1.0;          ty.data[2][2]= cos(oy);
+    ty.data[2][0]=-sin(oy);                             ty.data[2][2]= cos(oy);
 
     QMatrixA tz;
 

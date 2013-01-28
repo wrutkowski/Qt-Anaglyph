@@ -45,6 +45,12 @@ private slots:
 
     void on_horizontalSlider_3_valueChanged(int value);
 
+    void on_sliderZoom_valueChanged(int value);
+
+    void on_checkBoxShape_toggled(bool checked);
+
+    void on_checkBoxAnaglyph_toggled(bool checked);
+
 private:
     void updateAnaglyph();
 

@@ -160,7 +160,7 @@ void MainWindow::on_sliderZ_valueChanged(int value)
 
 void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
-    ui->labelZoom->setText(QString::number(value));
+    ui->labelObserverDistance->setText(QString::number(value));
     _a.setCoordDist(value);
     this->updateAnaglyph();
 }
@@ -176,5 +176,24 @@ void MainWindow::on_horizontalSlider_3_valueChanged(int value)
 {
     ui->labelLine->setText(QString::number(value));
     _lineWidth = (double)value/10.0;
+    this->updateAnaglyph();
+}
+
+void MainWindow::on_sliderZoom_valueChanged(int value)
+{
+    ui->labelZoom->setText(QString::number(value));
+    _a.setZoom(value);
+    this->updateAnaglyph();
+}
+
+void MainWindow::on_checkBoxShape_toggled(bool checked)
+{
+    _a.setDrawShape(checked);
+    this->updateAnaglyph();
+}
+
+void MainWindow::on_checkBoxAnaglyph_toggled(bool checked)
+{
+    _a.setDrawAnaglyph(checked);
     this->updateAnaglyph();
 }

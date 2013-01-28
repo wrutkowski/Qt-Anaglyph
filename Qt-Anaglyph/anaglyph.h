@@ -27,6 +27,9 @@ public:
     void setObservDist(double dist) {_coordinateDistance = dist;}
     void setEyeDist(double dist) {_eyeDistance = dist;}
     void setLineWidth(double width) {_lineWidth = width;}
+    void setZoom(int zoom) {_zoom = zoom;}
+    void setDrawAnaglyph(bool b) {_drawAnaglyph = b;}
+    void setDrawShape(bool b) {_drawShape = b;}
     double getEyeDist() const {return _eyeDistance;}
     double getCoordDist() const {return _coordinateDistance;}
     double getObservDist() const {return _observerDistance;}
@@ -34,22 +37,25 @@ public:
     Point2D rightEyeView(double x, double y, double z);
     void generate(Ui::MainWindow *ui);
 private:
+    QList<ALine> _data; // list of all lines of the shape
+
     double _coordinateDistance; // distance between (0,0,0) and the screen; slider will be good
     double _observerDistance; // distance between eyes and the screen
     double _eyeDistance; // distance between eyes; test - find the correlacion between mm and units
-
-
-    QList<ALine> _data; // list of all lines of the shape
+    double _lineWidth;
 
     int _X;
     int _Y;
     int _Z;
+    int _zoom;
 
-    int _glassesType;
+    bool _drawAnaglyph;
+    bool _drawShape;
+
     QColor _backgroundColor;
     QColor _colorLeftEye;
     QColor _colorRightEye;
-    double _lineWidth;
+
     QImage _anaglyphImage;
 
 };

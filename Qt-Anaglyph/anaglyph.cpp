@@ -9,17 +9,25 @@
 #include <QPainter>
 
 Anaglyph::Anaglyph()
-    : _coordinateDistance(10), _observerDistance(80), _eyeDistance(40)
+    : _coordinateDistance(10), _observerDistance(80), _eyeDistance(40), _zoom(10), _lineWidth(1.0), _drawAnaglyph(true), _drawShape(true)
 {
     _X = 0;
     _Y = 0;
     _Z = 0;
     _backgroundColor = Qt::white;
-    _lineWidth = 1.0;
 }
 
 void Anaglyph::setData(QStringList data) {
     _data.clear();
+
+    // axis X, Y, Z - testing
+    ALine alineX(-100, 0, 0, 100, 0, 0);
+    ALine alineY(0, -100, 0, 0, 100, 0);
+    ALine alineZ(0, 0, -100, 0, 0, -100);
+    _data.append(alineX);
+    _data.append(alineY);
+    _data.append(alineZ);
+    // ---
 
     for (int i = 0; i < data.size(); ++i) {
         QString line = data[i];
@@ -27,7 +35,7 @@ void Anaglyph::setData(QStringList data) {
 
         QStringList row = line.split(" ");
 
-        //gdy pierwsza linia ma tylko ilosc krawedzi
+        // first row should have only rows count
         if (row.count() < 7 && i != 0) continue;
 
         int type = row[0].toInt();
@@ -45,13 +53,12 @@ void Anaglyph::setData(QStringList data) {
 
 }
 
-void Anaglyph::generate(Ui::MainWindow *ui) {
-    qDebug() << "Generating...";    
+void Anaglyph::generate(Ui::MainWindow *ui) {    
 
-    int xmin= 9999;
-    int xmax=-9999;
-    int ymin= 9999;
-    int ymax=-9999;
+    int xmin =  9999;
+    int xmax = -9999;
+    int ymin =  9999;
+    int ymax = -9999;
 
     int w = 800;
     int h = 600;
@@ -87,32 +94,26 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
 
         }
 
-        qDebug() << xmin << " " << xmax <<":"<<ymin<<" "<<ymax;
-    //odleglosc od ramki
-    int distFromEdge = _observerDistance;
+    // distance form edge of image
+    int distFromEdge = 10;
 
-    //ze swiata do ekranu
-    QMatrixA wts = QMatrixA::worldToScreen(xmin, xmax, ymin, ymax, distFromEdge, w-distFromEdge, h-distFromEdge, distFromEdge);//h 0
+    // world to screen
+    QMatrixA wts = QMatrixA::worldToScreen(xmin, xmax, ymin, ymax, distFromEdge, w-distFromEdge, h-distFromEdge, distFromEdge);
 
-    //przesuniecie
+    // translation
     QMatrixA tr  = QMatrixA::translation( 1,1,1 );
 
-    //odleglosc od rzutni
-    double d = 20.0;
+    // perspective
+    QMatrixA pv  = QMatrixA::perspectiveView(20.0);
 
-    //perspektywa
-    QMatrixA pv  = QMatrixA::perspectiveView(d);
+    // scale = zoom
+    QMatrixA sc  = QMatrixA::scale( _zoom/100.0, _zoom/100.0, _zoom/100.0);
 
-    //skalowanie
-    QMatrixA sc  = QMatrixA::scale( 1.0/10, 1.0/10, 1.0/10);
+    // rotation
+    QMatrixA rot = QMatrixA::rotate(   ui->sliderX->value(), ui->sliderY->value(), -ui->sliderZ->value() ); // minus (-) to inverse Z rotate for plus angle
 
-    // rotacja
-    QMatrixA rot = QMatrixA::rotate(   ui->sliderX->value(),
-                                     ui->sliderY->value(),
-                                    -ui->sliderZ->value() ); //- zeby obracalo sie do dodatniego kata
-
-    //przesuniecie za rzutnie
-    QMatrixA tr_view  = QMatrixA::translation( 0, 0, 0.5);
+    // translation
+    QMatrixA tr_view  = QMatrixA::translation( -1, -1, -1);
 
     QMatrixA m1   = tr_view * tr * rot * sc;
     QMatrixA m2    = wts * pv;
@@ -142,21 +143,102 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
         QMatrixA::line2d(m1, &w1, &w2);
         QMatrixA::line2d(m2, &w1, &w2);
 
-        Point2D leftBegP = leftEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
-        Point2D leftEndP = leftEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
-        Point2D rightBegP = rightEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
-        Point2D rightEndP = rightEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
+        if (_drawShape) {
+            p.setPen(QPen(QColor(Qt::black)));
+            p.drawLine(QLine(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY()));
+        }
 
-        p.setPen(pen1);
-        p.setBrush(QBrush(QColor(_colorLeftEye), Qt::NoBrush));
-        p.drawLine(QLine(leftBegP.x, leftBegP.y, leftEndP.x, leftEndP.y));
+        if (_drawAnaglyph) {
+            Point2D leftBegP = leftEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+            Point2D leftEndP = leftEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
+            Point2D rightBegP = rightEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+            Point2D rightEndP = rightEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
 
-        p.setPen(pen2);
-        p.setBrush(QBrush(QColor(_colorRightEye), Qt::NoBrush));
-        p.drawLine(QLine(rightBegP.x, rightBegP.y, rightEndP.x, rightEndP.y));
+            p.setPen(pen1);
+            p.setBrush(QBrush(QColor(_colorLeftEye), Qt::NoBrush));
+            p.drawLine(QLine(leftBegP.x, leftBegP.y, leftEndP.x, leftEndP.y));
 
+            p.setPen(pen2);
+            p.setBrush(QBrush(QColor(_colorRightEye), Qt::NoBrush));
+            p.drawLine(QLine(rightBegP.x, rightBegP.y, rightEndP.x, rightEndP.y));
+        }
+    }
+/*
+    // axis X
+    {
+    w1.Set(-100, 0, 0);
+    w2.Set(100, 0, 0);
+
+    QMatrixA::line2d(m1, &w1, &w2);
+    QMatrixA::line2d(m2, &w1, &w2);
+
+    p.setPen(QPen(QColor(Qt::black)));
+    p.drawLine(QLine(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY()));
+
+    Point2D leftBegP = leftEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+    Point2D leftEndP = leftEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
+    Point2D rightBegP = rightEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+    Point2D rightEndP = rightEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
+
+    p.setPen(pen1);
+    p.setBrush(QBrush(QColor(_colorLeftEye), Qt::NoBrush));
+    p.drawLine(QLine(leftBegP.x, leftBegP.y, leftEndP.x, leftEndP.y));
+
+    p.setPen(pen2);
+    p.setBrush(QBrush(QColor(_colorRightEye), Qt::NoBrush));
+    p.drawLine(QLine(rightBegP.x, rightBegP.y, rightEndP.x, rightEndP.y));
     }
 
+    // axis Y
+    {
+    w1.Set(0, -100, 0);
+    w2.Set(0, 100, 0);
+
+    QMatrixA::line2d(m1, &w1, &w2);
+    QMatrixA::line2d(m2, &w1, &w2);
+
+    p.setPen(QPen(QColor(Qt::black)));
+    p.drawLine(QLine(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY()));
+
+    Point2D leftBegP = leftEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+    Point2D leftEndP = leftEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
+    Point2D rightBegP = rightEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+    Point2D rightEndP = rightEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
+
+    p.setPen(pen1);
+    p.setBrush(QBrush(QColor(_colorLeftEye), Qt::NoBrush));
+    p.drawLine(QLine(leftBegP.x, leftBegP.y, leftEndP.x, leftEndP.y));
+
+    p.setPen(pen2);
+    p.setBrush(QBrush(QColor(_colorRightEye), Qt::NoBrush));
+    p.drawLine(QLine(rightBegP.x, rightBegP.y, rightEndP.x, rightEndP.y));
+    }
+
+    // axis Z
+    {
+    w1.Set(0, 0, -100);
+    w2.Set(0, 0, 100);
+
+    QMatrixA::line2d(m1, &w1, &w2);
+    QMatrixA::line2d(m2, &w1, &w2);
+
+    p.setPen(QPen(QColor(Qt::black)));
+    p.drawLine(QLine(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY()));
+
+    Point2D leftBegP = leftEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+    Point2D leftEndP = leftEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
+    Point2D rightBegP = rightEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+    Point2D rightEndP = rightEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
+
+    p.setPen(pen1);
+    p.setBrush(QBrush(QColor(_colorLeftEye), Qt::NoBrush));
+    p.drawLine(QLine(leftBegP.x, leftBegP.y, leftEndP.x, leftEndP.y));
+
+    p.setPen(pen2);
+    p.setBrush(QBrush(QColor(_colorRightEye), Qt::NoBrush));
+    p.drawLine(QLine(rightBegP.x, rightBegP.y, rightEndP.x, rightEndP.y));
+    }
+*/
     p.end();
 
 
