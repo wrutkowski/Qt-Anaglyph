@@ -125,10 +125,10 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
 
     QPainter p;
     p.begin(&_anaglyphImage);
-
+    //left eye
     QVectorA w1;    //begin
     QVectorA w2;    //end
-
+    //right eye
     QVectorA v1;    //begin
     QVectorA v2;    //end
 
@@ -142,15 +142,15 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
 
         qDebug() << "_data[i].z" << -_data.at(i).z1;
         qDebug() << "_data[i].z" << -_data.at(i).z2;
-        w1.Set(_data.at(i).x1, _data.at(i).y1, -_data.at(i).z1);
-        w2.Set(_data.at(i).x2, _data.at(i).y2, -_data.at(i).z2);
-        v1.Set(_data.at(i).x1, _data.at(i).y1, -_data.at(i).z1);
-        v2.Set(_data.at(i).x2, _data.at(i).y2, -_data.at(i).z2);
+        //w1.Set(_data.at(i).x1, _data.at(i).y1, -_data.at(i).z1);
+        //w2.Set(_data.at(i).x2, _data.at(i).y2, -_data.at(i).z2);
+        //v1.Set(_data.at(i).x1, _data.at(i).y1, -_data.at(i).z1);
+        //v2.Set(_data.at(i).x2, _data.at(i).y2, -_data.at(i).z2);
 
-            Point2D leftBegP = leftEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
-            Point2D leftEndP = leftEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
-            Point2D rightBegP = rightEyeView(v1.GetX(), v1.GetY(), v1.GetZ());
-            Point2D rightEndP = rightEyeView(v2.GetX(), v2.GetY(), v2.GetZ());
+            Point2D leftBegP = leftEyeView(_data.at(i).x1, _data.at(i).y1, _data.at(i).z1);
+            Point2D leftEndP = leftEyeView(_data.at(i).x2, _data.at(i).y2, _data.at(i).z2);
+            Point2D rightBegP = rightEyeView(_data.at(i).x1, _data.at(i).y1, _data.at(i).z1);
+            Point2D rightEndP = rightEyeView(_data.at(i).x2, _data.at(i).y2, _data.at(i).z2);
 
 
         w1.Set(leftBegP.x, leftBegP.y, -_data.at(i).z1);
