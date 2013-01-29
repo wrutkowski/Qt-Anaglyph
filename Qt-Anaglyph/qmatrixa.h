@@ -14,7 +14,7 @@ public:
     friend QVectorA operator* ( const QMatrixA,const QVectorA );
     static QMatrixA translation(double DeltaX, double DeltaY, double DeltaZ);
     static QMatrixA scale(double SX, double SY, double SZ);
-    static QMatrixA worldToScreen(double x_0, double x_1, double y_0, double y_1, double x_min, double x_max, double y_min, double y_max );
+    static QMatrixA worldToScreen(double x_0, double x_1, double y_0, double y_1, double z_0, double z_1, double x_min, double x_max, double y_min, double y_max, double z_min, double z_max );
     static QMatrixA rotateOX(double alpha);
     static QMatrixA rotateOY(double alpha);
     static QMatrixA rotateOZ(double alpha);

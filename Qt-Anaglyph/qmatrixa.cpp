@@ -159,21 +159,23 @@ QMatrixA QMatrixA::rotate(double ox, double oy, double oz)
     return tx * ty * tz;
 }
 
-QMatrixA QMatrixA::worldToScreen(double x_0, double x_1, double y_0, double y_1, double x_min, double x_max, double y_min, double y_max )
+QMatrixA QMatrixA::worldToScreen(double x_0, double x_1, double y_0, double y_1, double z_0, double z_1, double x_min, double x_max, double y_min, double y_max, double z_min, double z_max )
 {
-    int k, j;
+    int k, j, l;
     //div by 0!
     if(x_1 == x_0) k = 1; else k = (x_1 - x_0);
-    if(y_1 == y_0) k = 1; else k = (y_1 - y_0);
+    if(y_1 == y_0) j = 1; else j = (y_1 - y_0);
+    if(z_1 == z_0) l = 1; else l = (z_1 - z_0);
 
     double S_x = ( x_max - x_min ) / k;
-    double S_y = ( y_max - y_min ) / k;
+    double S_y = ( y_max - y_min ) / j;
+    double S_z = ( z_max - z_min ) / l;
 
     QMatrixA t;
 
     t.data[0][0]=double(S_x);                                           t.data[0][3]= double(x_min - S_x * x_0);
                         t.data[1][1]=double(S_y);                       t.data[1][3]= double(y_min - S_y * y_0);
-
+                                            t.data[2][2]=double(S_z);   t.data[2][3]= double(z_min - S_z * z_0);
     return t;
 }
 
@@ -196,7 +198,7 @@ QMatrixA QMatrixA::perspectiveView(double d)
 
     t.data[0][0]=1.0;
                         t.data[1][1]=1.0;
-                                            //0.0
+                                            t.data[2][2]=1.0;
                                             t.data[3][2]=1.0/d; //1.0
 
     return t;

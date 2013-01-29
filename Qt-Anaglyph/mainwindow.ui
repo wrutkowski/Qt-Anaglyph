@@ -92,7 +92,7 @@ background: transparent;
          <widget class="QLabel" name="imageAnaglyph">
           <property name="geometry">
            <rect>
-            <x>30</x>
+            <x>60</x>
             <y>60</y>
             <width>801</width>
             <height>601</height>
@@ -142,7 +142,7 @@ background: transparent;
           <height>41</height>
          </rect>
         </property>
-        <property name="currentText" stdset="0">
+        <property name="currentText">
          <string>red / cyan</string>
         </property>
         <item>
@@ -460,16 +460,16 @@ background: transparent;
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>390</y>
+          <y>380</y>
           <width>261</width>
           <height>22</height>
          </rect>
         </property>
         <property name="minimum">
-         <number>-100</number>
+         <number>10</number>
         </property>
         <property name="maximum">
-         <number>100</number>
+         <number>40</number>
         </property>
         <property name="value">
          <number>10</number>
@@ -482,7 +482,7 @@ background: transparent;
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>370</y>
+          <y>360</y>
           <width>141</width>
           <height>16</height>
          </rect>
@@ -500,7 +500,7 @@ background: transparent;
         <property name="geometry">
          <rect>
           <x>170</x>
-          <y>370</y>
+          <y>360</y>
           <width>31</width>
           <height>21</height>
          </rect>
@@ -513,7 +513,7 @@ background: transparent;
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>420</y>
+          <y>410</y>
           <width>101</width>
           <height>16</height>
          </rect>
@@ -531,7 +531,7 @@ background: transparent;
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>440</y>
+          <y>430</y>
           <width>261</width>
           <height>22</height>
          </rect>
@@ -553,7 +553,7 @@ background: transparent;
         <property name="geometry">
          <rect>
           <x>170</x>
-          <y>420</y>
+          <y>410</y>
           <width>46</width>
           <height>13</height>
          </rect>
@@ -566,7 +566,7 @@ background: transparent;
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>320</y>
+          <y>310</y>
           <width>81</width>
           <height>16</height>
          </rect>
@@ -584,7 +584,7 @@ background: transparent;
         <property name="geometry">
          <rect>
           <x>170</x>
-          <y>320</y>
+          <y>310</y>
           <width>46</width>
           <height>13</height>
          </rect>
@@ -597,7 +597,7 @@ background: transparent;
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>340</y>
+          <y>330</y>
           <width>261</width>
           <height>22</height>
          </rect>
@@ -615,91 +615,6 @@ background: transparent;
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
-       <widget class="QLabel" name="label_9">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>470</y>
-          <width>121</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Zoom</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="labelZoom">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>470</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>10</string>
-        </property>
-       </widget>
-       <widget class="QSlider" name="sliderZoom">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>490</y>
-          <width>261</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="minimum">
-         <number>0</number>
-        </property>
-        <property name="maximum">
-         <number>100</number>
-        </property>
-        <property name="value">
-         <number>10</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="checkBoxShape">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>290</y>
-          <width>111</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Draw Shape</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="checkBoxAnaglyph">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>290</y>
-          <width>111</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Draw Anaglyph</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
       </widget>
      </item>
     </layout>
@@ -711,7 +626,7 @@ background: transparent;
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

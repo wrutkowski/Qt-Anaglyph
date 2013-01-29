@@ -27,7 +27,6 @@ public:
     void setObservDist(double dist) {_coordinateDistance = dist;}
     void setEyeDist(double dist) {_eyeDistance = dist;}
     void setLineWidth(double width) {_lineWidth = width;}
-    void setZoom(int zoom) {_zoom = zoom;}
     void setDrawAnaglyph(bool b) {_drawAnaglyph = b;}
     void setDrawShape(bool b) {_drawShape = b;}
     double getEyeDist() const {return _eyeDistance;}
@@ -47,7 +46,6 @@ private:
     int _X;
     int _Y;
     int _Z;
-    int _zoom;
 
     bool _drawAnaglyph;
     bool _drawShape;
