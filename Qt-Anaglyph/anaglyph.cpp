@@ -9,25 +9,17 @@
 #include <QPainter>
 
 Anaglyph::Anaglyph()
-    : _coordinateDistance(10), _observerDistance(80), _eyeDistance(40), _zoom(10), _lineWidth(1.0), _drawAnaglyph(true), _drawShape(true)
+    : _coordinateDistance(10), _observerDistance(80), _eyeDistance(40)
 {
     _X = 0;
     _Y = 0;
     _Z = 0;
     _backgroundColor = Qt::white;
+    _lineWidth = 1.0;
 }
 
 void Anaglyph::setData(QStringList data) {
     _data.clear();
-
-    // axis X, Y, Z - testing
-    ALine alineX(-100, 0, 0, 100, 0, 0);
-    ALine alineY(0, -100, 0, 0, 100, 0);
-    ALine alineZ(0, 0, -100, 0, 0, -100);
-    _data.append(alineX);
-    _data.append(alineY);
-    _data.append(alineZ);
-    // ---
 
     for (int i = 0; i < data.size(); ++i) {
         QString line = data[i];
@@ -35,7 +27,7 @@ void Anaglyph::setData(QStringList data) {
 
         QStringList row = line.split(" ");
 
-        // first row should have only rows count
+        //gdy pierwsza linia ma tylko ilosc krawedzi
         if (row.count() < 7 && i != 0) continue;
 
         int type = row[0].toInt();
@@ -53,12 +45,15 @@ void Anaglyph::setData(QStringList data) {
 
 }
 
-void Anaglyph::generate(Ui::MainWindow *ui) {    
+void Anaglyph::generate(Ui::MainWindow *ui) {
+    qDebug() << "Generating...";
 
-    int xmin =  9999;
-    int xmax = -9999;
-    int ymin =  9999;
-    int ymax = -9999;
+    int xmin= 9999;
+    int xmax=-9999;
+    int ymin= 9999;
+    int ymax=-9999;
+    int zmin= 9999;
+    int zmax=-9999;
 
     int w = 800;
     int h = 600;
@@ -71,6 +66,8 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
             int x2 = _data.at(i).x2;
             int y1 = _data.at(i).y1;
             int y2 = _data.at(i).y2;
+            int z1 = _data.at(i).z1;
+            int z2 = _data.at(i).z2;
 
             if( x1 > xmax )    xmax = x1;
             if( x2 > xmax )    xmax = x2;
@@ -78,42 +75,57 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
             if( y1 > ymax )    ymax = y1;
             if( y2 > ymax )    ymax = y2;
 
+            if( z1 > zmax )    zmax = z1;
+            if( z2 > zmax )    zmax = z2;
+
             if( x1 < xmin )    xmin = x1;
             if( x2 < xmin )    xmin = x2;
 
             if( y1 < ymin )    ymin = y1;
             if( y2 < ymin )    ymin = y2;
 
+            if( z1 < zmin )    zmin = z1;
+            if( z2 < zmin )    zmin = z2;
+
             if(size == 1){
                 xmin = x1;
                 xmax = x2;
                 ymin = y1;
                 ymax = y2;
+                zmin = z1;
+                zmax = z2;
 
             }
 
         }
 
-    // distance form edge of image
-    int distFromEdge = 10;
+        qDebug() << xmin << " " << xmax <<":"<<ymin<<" "<<ymax;
+    //odleglosc od ramki
+    int distFromEdge = _observerDistance;
+    int coor = -_coordinateDistance;
 
-    // world to screen
-    QMatrixA wts = QMatrixA::worldToScreen(xmin, xmax, ymin, ymax, distFromEdge, w-distFromEdge, h-distFromEdge, distFromEdge);
+    //ze swiata do ekranu
+    QMatrixA wts = QMatrixA::worldToScreen(xmin, xmax, ymin, ymax, zmin, zmax, distFromEdge, w-distFromEdge, h-distFromEdge, distFromEdge, 0, distFromEdge);//h 0
 
-    // translation
+    //przesuniecie
     QMatrixA tr  = QMatrixA::translation( 1,1,1 );
 
-    // perspective
-    QMatrixA pv  = QMatrixA::perspectiveView(20.0);
+    //odleglosc od rzutni
+    double d = 20.0;
 
-    // scale = zoom
-    QMatrixA sc  = QMatrixA::scale( _zoom/100.0, _zoom/100.0, _zoom/100.0);
+    //perspektywa
+    QMatrixA pv  = QMatrixA::perspectiveView(d);
 
-    // rotation
-    QMatrixA rot = QMatrixA::rotate(   ui->sliderX->value(), ui->sliderY->value(), -ui->sliderZ->value() ); // minus (-) to inverse Z rotate for plus angle
+    //skalowanie
+    QMatrixA sc  = QMatrixA::scale( (coor+1.0)/33, (coor+1.0)/33, (coor+1.0)/33 );
 
-    // translation
-    QMatrixA tr_view  = QMatrixA::translation( -1, -1, -1);
+    // rotacja
+    QMatrixA rot = QMatrixA::rotate(   ui->sliderX->value(),
+                                     ui->sliderY->value(),
+                                    -ui->sliderZ->value() ); //- zeby obracalo sie do dodatniego kata
+
+    //przesuniecie za rzutnie
+    QMatrixA tr_view  = QMatrixA::translation( 0, 0, 0.5);
 
     QMatrixA m1   = tr_view * tr * rot * sc;
     QMatrixA m2    = wts * pv;
@@ -125,12 +137,9 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
 
     QPainter p;
     p.begin(&_anaglyphImage);
-    //left eye
+
     QVectorA w1;    //begin
     QVectorA w2;    //end
-    //right eye
-    QVectorA v1;    //begin
-    QVectorA v2;    //end
 
     QPen pen1 = QPen(QColor(_colorLeftEye));
     QPen pen2 = QPen(QColor(_colorRightEye));
@@ -140,46 +149,39 @@ void Anaglyph::generate(Ui::MainWindow *ui) {
     for(int i = 0; i < size; ++i)
     {
 
-        qDebug() << "_data[i].z" << -_data.at(i).z1;
-        qDebug() << "_data[i].z" << -_data.at(i).z2;
-        //w1.Set(_data.at(i).x1, _data.at(i).y1, -_data.at(i).z1);
-        //w2.Set(_data.at(i).x2, _data.at(i).y2, -_data.at(i).z2);
-        //v1.Set(_data.at(i).x1, _data.at(i).y1, -_data.at(i).z1);
-        //v2.Set(_data.at(i).x2, _data.at(i).y2, -_data.at(i).z2);
-
-            Point2D leftBegP = leftEyeView(_data.at(i).x1, _data.at(i).y1, _data.at(i).z1);
-            Point2D leftEndP = leftEyeView(_data.at(i).x2, _data.at(i).y2, _data.at(i).z2);
-            Point2D rightBegP = rightEyeView(_data.at(i).x1, _data.at(i).y1, _data.at(i).z1);
-            Point2D rightEndP = rightEyeView(_data.at(i).x2, _data.at(i).y2, _data.at(i).z2);
-
-
-        w1.Set(leftBegP.x, leftBegP.y, -_data.at(i).z1);
-        w2.Set(leftEndP.x, leftEndP.y, -_data.at(i).z2);
-        v1.Set(rightBegP.x, rightBegP.y, -_data.at(i).z1);
-        v2.Set(rightEndP.x, rightEndP.y, -_data.at(i).z2);
+        w1.Set(_data.at(i).x1, _data.at(i).y1, -_data.at(i).z1);
+        w2.Set(_data.at(i).x2, _data.at(i).y2, -_data.at(i).z2);
 
         QMatrixA::line2d(m1, &w1, &w2);
         QMatrixA::line2d(m2, &w1, &w2);
-        QMatrixA::line2d(m1, &v1, &v2);
-        QMatrixA::line2d(m2, &v1, &v2);
-        if (_drawShape) {
-            p.setPen(QPen(QColor(Qt::black)));
-            p.drawLine(QLine(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY()));
-        }
 
-        if (_drawAnaglyph) {
+        if(_drawAnaglyph){
+            Point2D leftBegP = leftEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+            Point2D leftEndP = leftEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
+            Point2D rightBegP = rightEyeView(w1.GetX(), w1.GetY(), w1.GetZ());
+            Point2D rightEndP = rightEyeView(w2.GetX(), w2.GetY(), w2.GetZ());
 
             p.setPen(pen1);
             p.setBrush(QBrush(QColor(_colorLeftEye), Qt::NoBrush));
-            p.drawLine(QLine(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY()));
+            p.drawLine(QLine(leftBegP.x, leftBegP.y, leftEndP.x, leftEndP.y));
 
             p.setPen(pen2);
             p.setBrush(QBrush(QColor(_colorRightEye), Qt::NoBrush));
-            p.drawLine(QLine(v1.GetX(), v1.GetY(), v2.GetX(), v2.GetY()));
+            p.drawLine(QLine(rightBegP.x, rightBegP.y, rightEndP.x, rightEndP.y));
+
         }
+        if(_drawShape){
+
+            p.setPen(QPen(QColor(Qt::black)));
+            p.setBrush(QBrush(QColor(_colorRightEye), Qt::NoBrush));
+            p.drawLine(QLine(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY()));
+
+        }
+
     }
 
     p.end();
+
 
 }
 Point2D Anaglyph::leftEyeView(double x, double y, double z)
@@ -188,8 +190,6 @@ Point2D Anaglyph::leftEyeView(double x, double y, double z)
     p.y = y*_observerDistance/(_observerDistance+_coordinateDistance+z);
     p.x = ((x*_observerDistance)/(_coordinateDistance+_observerDistance+z))-
             ((_eyeDistance*(_coordinateDistance+z))/(_coordinateDistance+_observerDistance+z));
-    qDebug() << "leftEyeView.args Z" << z << "Y" << y << "X" << x;
-    qDebug() << "leftEyeView.result p.x" << p.x << "p.y" << p.y;
     return p;
 }
 
@@ -199,7 +199,5 @@ Point2D Anaglyph::rightEyeView(double x, double y, double z)
     p.y = y*_observerDistance/(_observerDistance+_coordinateDistance+z);
     p.x = ((x*_observerDistance)/(_coordinateDistance+_observerDistance+z))+
             ((_eyeDistance*(_coordinateDistance+z))/(_coordinateDistance+_observerDistance+z));
-    qDebug() << "rightEyeView.args Z" << z << "Y" << y << "X" << x;
-    qDebug() << "rightEyeView.result p.x" << p.x << "p.y" << p.y;
     return p;
 }
