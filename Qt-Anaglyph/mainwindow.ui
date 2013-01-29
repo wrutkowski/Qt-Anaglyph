@@ -92,7 +92,7 @@ background: transparent;
          <widget class="QLabel" name="imageAnaglyph">
           <property name="geometry">
            <rect>
-            <x>30</x>
+            <x>50</x>
             <y>60</y>
             <width>801</width>
             <height>601</height>
@@ -142,7 +142,7 @@ background: transparent;
           <height>41</height>
          </rect>
         </property>
-        <property name="currentText" stdset="0">
+        <property name="currentText">
          <string>red / cyan</string>
         </property>
         <item>
@@ -711,7 +711,7 @@ background: transparent;
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
